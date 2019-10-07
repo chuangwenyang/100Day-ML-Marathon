@@ -1,0 +1,43 @@
+# -*- coding: utf-8 -*-
+"""
+Spyder Editor
+
+This is a temporary script file.
+"""
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+w = 3
+b = 0.5
+
+x_lin = np.linspace(0, 100, 101)
+y = (x_lin + np.random.randn(101) * 5) * w + b
+y_hat = x_lin * w + b
+
+plt.plot(x_lin, y, 'b.', label = 'data points')
+plt.plot(x_lin, y_hat, 'r-', label = 'prediction')
+plt.title("Assume we have data points (And the prediction)")
+plt.legend(loc = 2)
+plt.show()
+
+def mean_absolute_error(y, yp):
+    mae = MAE = sum(abs(y - yp)) / len(y)
+    return mae
+
+MAE = mean_absolute_error(y, y_hat)
+print("The Mean absolute error is %.3f" % (MAE))
+
+第二題
+我選擇的資料為紐約的airbnb所提供的公開資料
+https://www.kaggle.com/dgomonov/new-york-city-airbnb-open-data
+資料的提供者為airbnb公司，資料內容包含訂單標號，訂單名稱，飯店編號、飯店名稱、價格、日期、房型等資料。
+資料型態包含文字，標點符號及數字。
+收集這組資料並經過統計後可以清楚的知道租屋的旺季及淡季、價格與房型對於訂房的關係等資料
+
+第三題
+核心問題：如何在單位時間內有效的利用單位人力的人力資源並在成本不改變的情況下提高營業額
+資料來源：由每個司機載客時所提供。資料來源為司機上下線時間(上班時間)、單位司機單位時間載客數(每小時載幾位客人)、單位司機單位時間收入、
+單位時間里程數等資料，經APP回傳公司後判定。
+資料型態：多為數字，部分為文字，標題為文字
+回答的問題：藉收集而來的資料進行評估。評估單位區域(及時間)合理司機數、如何蹲點以減少停車費或油耗等，祈在降低成本的同時提高載客數。假說可以經由司機實證並修改。
