@@ -1,0 +1,64 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Oct 20 18:00:57 2019
+
+@author: user
+"""
+
+
+target_url =  'https://raw.githubusercontent.com/vashineyu/slides_and_others/master/tutorial/examples/imagenet_urls_examples.txt'
+import requests
+response = requests.get(target_url)
+data = response.text
+print(len(data))
+data[0:100]
+
+import re
+import numpy as np
+split_tag = ["\n", "\t"]
+
+data = re.split(r"|".join(split_tag),data)[:-1]
+data = np.array(data).reshape([-1,2])
+#data = data.split(split_tag)
+print(len(data))
+print(data[0:3])
+
+import pandas as pd
+ 
+df = pd.DataFrame(data)
+a=df.head()
+print(a)
+
+from PIL import Image
+from io import BytesIO
+import numpy as np
+import matplotlib.pyplot as plt
+
+first_link = df.iloc[0,1]
+
+response = requests.get(first_link)
+img = Image.open(BytesIO(response.content))
+
+
+plt.imshow(img)
+plt.show()
+
+def img2arr_fromURLs(url_list, resize = False):   
+    img_list = []
+    for url in url_list:
+        try:
+            response = requests.get(url)
+            img = Image.open(BytesIO(response.content))
+            if resize: img = img.resize((500, 500))
+            img_list.append(img)
+        except:
+            continue
+    
+    return img_list
+
+result = img2arr_fromURLs(df[0:5][1].values)
+print("Total images that we got: %i " % len(result))
+
+for im_get in result:
+    plt.imshow(im_get)
+    plt.show()
